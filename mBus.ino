@@ -75,11 +75,11 @@ void local_adc1_read(int channel) {
         timerAlarmDisable(adcTimer);
         for(i=8; i>=1;i--){
           if(i>4){
-            dec1 += (!(abuf[i]/290))*pow(2,(i-5));
+            dec1 += (!(abuf[i]/240))*pow(2,(i-5));
             //Serial.println(dec1);
             }
           else {
-            dec2 += (!(abuf[i]/290))*pow(2,(i-1)); 
+            dec2 += (!(abuf[i]/240))*pow(2,(i-1)); 
             //Serial.println(dec2);
             }         
 
@@ -112,7 +112,6 @@ void printReceivedData(){
   //while(lcount>0) {
     //Serial.write(rxDATA[ldata-(lcount--)]);
     Serial.write(rxDATA,81);
-    mySerial.write(rxDATA,81);
     //Serial.print(' ');
     //Serial.print(rxDATA[2*ldata-(lcount--)]);
    // Serial.print(' ');
@@ -185,6 +184,7 @@ void loop() {
   // put your main code here, to run repeatedly:
  //if(startBit){
  //if(command != NULL){
+ while(Serial.available() == 0 && command == NULL){};
  if(Serial.available() > 0){
    command = Serial.read();
     mySerial.write(command);
